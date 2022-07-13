@@ -109,19 +109,21 @@
                                     </div>
                                     <div class="variation-body">
                                         <template v-for="attribute in product.attributes">
-                                            <div class="attribute">
-                                                <p>{{ attribute.name }}</p>
-                                                <div class="options">
-                                                    <template v-for="option in attribute.options">
-                                                        <label>
-                                                            <input type="radio" v-model="selectedAttribute[attribute.name]" :value="option">
-                                                            <div class="box">
-                                                                {{ option }}
-                                                            </div>
-                                                        </label>
-                                                    </template>
+                                            <template v-if="attribute.variation">
+                                                <div class="attribute">
+                                                    <p>{{ attribute.name }}</p>
+                                                    <div class="options">
+                                                        <template v-for="option in attribute.options">
+                                                            <label>
+                                                                <input type="radio" v-model="selectedAttribute[attribute.name]" :value="option">
+                                                                <div class="box">
+                                                                    {{ option }}
+                                                                </div>
+                                                            </label>
+                                                        </template>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </template>
                                         </template>
                                     </div>
                                     <div class="variation-footer">
@@ -686,7 +688,7 @@ export default {
 
     watch: {
         selectedAttribute( newdata, olddata ) {
-            if( Object.keys(newdata).length == this.selectedVariationProduct.attributes.length ) {
+            if( Object.keys(newdata).length == this.selectedVariationProduct.attributes.filter(a => a.variation).length ) {
                 this.attributeDisabled = false;
             }
         },

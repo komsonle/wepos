@@ -1090,6 +1090,8 @@ exports.default = {
 //
 //
 //
+//
+//
 
 
 
@@ -1226,7 +1228,7 @@ let Modal = wepos_get_lib('Modal');
 
     watch: {
         selectedAttribute(newdata, olddata) {
-            if (Object.keys(newdata).length == this.selectedVariationProduct.attributes.length) {
+            if (Object.keys(newdata).length == this.selectedVariationProduct.attributes.filter(a => a.variation).length) {
                 this.attributeDisabled = false;
             }
         },
@@ -1774,6 +1776,8 @@ let Modal = wepos_get_lib('Modal');
 //
 //
 //
+//
+//
 
 // import Modal from './Modal.vue';
 
@@ -1832,7 +1836,7 @@ let Modal = wepos_get_lib('Modal');
 
     watch: {
         chosenAttribute(newdata, olddata) {
-            if (Object.keys(newdata).length == this.selectedVariationProduct.attributes.length) {
+            if (Object.keys(newdata).length == this.selectedVariationProduct.attributes.filter(a => a.variation).length) {
                 this.attributeDisabled = false;
             }
         }
@@ -3817,61 +3821,70 @@ var render = function() {
                     "div",
                     { staticClass: "variation-attribute-wrapper" },
                     [
-                      _c("div", { staticClass: "attribute" }, [
-                        _c("p", [_vm._v(_vm._s(attribute.name))]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "options" },
-                          [
-                            _vm._l(attribute.options, function(option) {
-                              return [
-                                _c("label", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value:
-                                          _vm.chosenAttribute[attribute.name],
-                                        expression:
-                                          "chosenAttribute[attribute.name]"
-                                      }
-                                    ],
-                                    attrs: { type: "radio" },
-                                    domProps: {
-                                      value: option,
-                                      checked: _vm._q(
-                                        _vm.chosenAttribute[attribute.name],
-                                        option
-                                      )
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.$set(
-                                          _vm.chosenAttribute,
-                                          attribute.name,
-                                          option
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "box" }, [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(option) +
-                                        "\n                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ]
+                      attribute.variation
+                        ? [
+                            _c("div", { staticClass: "attribute" }, [
+                              _c("p", [_vm._v(_vm._s(attribute.name))]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "options" },
+                                [
+                                  _vm._l(attribute.options, function(option) {
+                                    return [
+                                      _c("label", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.chosenAttribute[
+                                                  attribute.name
+                                                ],
+                                              expression:
+                                                "chosenAttribute[attribute.name]"
+                                            }
+                                          ],
+                                          attrs: { type: "radio" },
+                                          domProps: {
+                                            value: option,
+                                            checked: _vm._q(
+                                              _vm.chosenAttribute[
+                                                attribute.name
+                                              ],
+                                              option
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.chosenAttribute,
+                                                attribute.name,
+                                                option
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "box" }, [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(option) +
+                                              "\n                                    "
+                                          )
+                                        ])
+                                      ])
+                                    ]
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]
+                        : _vm._e()
+                    ],
+                    2
                   )
                 })
               ),
@@ -6221,97 +6234,117 @@ var render = function() {
                                               attribute
                                             ) {
                                               return [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "attribute" },
-                                                  [
-                                                    _c("p", [
-                                                      _vm._v(
-                                                        _vm._s(attribute.name)
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "div",
-                                                      {
-                                                        staticClass: "options"
-                                                      },
-                                                      [
-                                                        _vm._l(
-                                                          attribute.options,
-                                                          function(option) {
-                                                            return [
-                                                              _c("label", [
-                                                                _c("input", {
-                                                                  directives: [
-                                                                    {
-                                                                      name:
-                                                                        "model",
-                                                                      rawName:
-                                                                        "v-model",
-                                                                      value:
-                                                                        _vm
-                                                                          .selectedAttribute[
-                                                                          attribute
-                                                                            .name
-                                                                        ],
-                                                                      expression:
-                                                                        "selectedAttribute[attribute.name]"
-                                                                    }
-                                                                  ],
-                                                                  attrs: {
-                                                                    type:
-                                                                      "radio"
-                                                                  },
-                                                                  domProps: {
-                                                                    value: option,
-                                                                    checked: _vm._q(
-                                                                      _vm
-                                                                        .selectedAttribute[
-                                                                        attribute
-                                                                          .name
-                                                                      ],
-                                                                      option
-                                                                    )
-                                                                  },
-                                                                  on: {
-                                                                    change: function(
-                                                                      $event
-                                                                    ) {
-                                                                      _vm.$set(
-                                                                        _vm.selectedAttribute,
-                                                                        attribute.name,
-                                                                        option
-                                                                      )
-                                                                    }
-                                                                  }
-                                                                }),
-                                                                _vm._v(" "),
-                                                                _c(
-                                                                  "div",
-                                                                  {
-                                                                    staticClass:
-                                                                      "box"
-                                                                  },
-                                                                  [
-                                                                    _vm._v(
-                                                                      "\n                                                            " +
-                                                                        _vm._s(
-                                                                          option
-                                                                        ) +
-                                                                        "\n                                                        "
+                                                attribute.variation
+                                                  ? [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "attribute"
+                                                        },
+                                                        [
+                                                          _c("p", [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                attribute.name
+                                                              )
+                                                            )
+                                                          ]),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "options"
+                                                            },
+                                                            [
+                                                              _vm._l(
+                                                                attribute.options,
+                                                                function(
+                                                                  option
+                                                                ) {
+                                                                  return [
+                                                                    _c(
+                                                                      "label",
+                                                                      [
+                                                                        _c(
+                                                                          "input",
+                                                                          {
+                                                                            directives: [
+                                                                              {
+                                                                                name:
+                                                                                  "model",
+                                                                                rawName:
+                                                                                  "v-model",
+                                                                                value:
+                                                                                  _vm
+                                                                                    .selectedAttribute[
+                                                                                    attribute
+                                                                                      .name
+                                                                                  ],
+                                                                                expression:
+                                                                                  "selectedAttribute[attribute.name]"
+                                                                              }
+                                                                            ],
+                                                                            attrs: {
+                                                                              type:
+                                                                                "radio"
+                                                                            },
+                                                                            domProps: {
+                                                                              value: option,
+                                                                              checked: _vm._q(
+                                                                                _vm
+                                                                                  .selectedAttribute[
+                                                                                  attribute
+                                                                                    .name
+                                                                                ],
+                                                                                option
+                                                                              )
+                                                                            },
+                                                                            on: {
+                                                                              change: function(
+                                                                                $event
+                                                                              ) {
+                                                                                _vm.$set(
+                                                                                  _vm.selectedAttribute,
+                                                                                  attribute.name,
+                                                                                  option
+                                                                                )
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "div",
+                                                                          {
+                                                                            staticClass:
+                                                                              "box"
+                                                                          },
+                                                                          [
+                                                                            _vm._v(
+                                                                              "\n                                                                " +
+                                                                                _vm._s(
+                                                                                  option
+                                                                                ) +
+                                                                                "\n                                                            "
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
                                                                     )
                                                                   ]
-                                                                )
-                                                              ])
-                                                            ]
-                                                          }
-                                                        )
-                                                      ],
-                                                      2
-                                                    )
-                                                  ]
-                                                )
+                                                                }
+                                                              )
+                                                            ],
+                                                            2
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  : _vm._e()
                                               ]
                                             })
                                           ],

@@ -50,19 +50,21 @@
         <modal :title="__( 'Select Variations', 'wepos' )" v-if="showVariationModal" @close="showVariationModal = false" width="500px" height="auto" :footer="true" :header="true">
             <template slot="body">
                 <div class="variation-attribute-wrapper" v-for="attribute in selectedVariationProduct.attributes">
-                    <div class="attribute">
-                        <p>{{ attribute.name }}</p>
-                        <div class="options">
-                            <template v-for="option in attribute.options">
-                                <label>
-                                    <input type="radio" v-model="chosenAttribute[attribute.name]" :value="option">
-                                    <div class="box">
-                                        {{ option }}
-                                    </div>
-                                </label>
-                            </template>
+                    <template v-if="attribute.variation">
+                        <div class="attribute">
+                            <p>{{ attribute.name }}</p>
+                            <div class="options">
+                                <template v-for="option in attribute.options">
+                                    <label>
+                                        <input type="radio" v-model="chosenAttribute[attribute.name]" :value="option">
+                                        <div class="box">
+                                            {{ option }}
+                                        </div>
+                                    </label>
+                                </template>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </template>
 
@@ -131,7 +133,7 @@ export default {
 
     watch: {
         chosenAttribute( newdata, olddata ) {
-            if( Object.keys(newdata).length == this.selectedVariationProduct.attributes.length ) {
+            if( Object.keys(newdata).length == this.selectedVariationProduct.attributes.filter(a => a.variation).length ) {
                 this.attributeDisabled = false;
             }
         }
