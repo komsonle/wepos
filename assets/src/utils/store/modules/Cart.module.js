@@ -170,7 +170,7 @@ export default {
                 value: discountData.value.toString(),
                 isEdit: false,
                 discount_type: discountData.type,
-                tax_status: 'none',
+                tax_status: 'taxable',
                 tax_class: '',
                 total: 0
             });
